@@ -1,4 +1,6 @@
 class ItemTaxesController < ApplicationController
+  before_action :find_tax, only: [:update, :show, :edit, :destroy]
+
   def index
     @item_taxes= Item.find(params[:item_id]).item_taxes
   end
@@ -19,7 +21,6 @@ class ItemTaxesController < ApplicationController
   end
 
   def update
-    @item_tax =  ItemTax.find(params[:id])
     if @item_tax.update_attributes(item_tax_params)
       redirect_to @item_tax
       flash[:success] = "Item tax updated successfully."
@@ -28,21 +29,25 @@ class ItemTaxesController < ApplicationController
     end
   end
 
-  def show
-    @item_tax =  ItemTax.find(params[:id])
+  def show;
   end
 
   def edit
-    @item_tax =  ItemTax.find(params[:id])
+    @item = Item.find(params[:item_id])
   end
 
   def destroy
-    ItemTax.find(params[:id]).destroy
+    item_id = @item_tax.item_id
+    @item_tax.destroy
     flash[:success] = "Item deleted"
-    redirect_to item_taxes_url
+    redirect_to item_taxes_url(item_id: item_id)
   end
 
   private
+
+  def find_tax
+    @item_tax = ItemTax.find(params[:id])
+  end
 
   def item_tax_params
     params.require(:item_tax).permit(:id, :tax, :tax_type, :item_id)

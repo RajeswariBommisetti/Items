@@ -19,7 +19,7 @@
           </td>
           <td>
             <%= link_to "edit", edit_item_category_path(item_category) %> | <%= link_to "delete", item_category, method: :delete,
-                                  data: { confirm: "You sure?" } %> | <%= link_to "go to items", items_path(item_id: item_category.id) %> | <%= link_to "+Add item", new_item_path(item_id: item_category.id) %>
+                                  data: { confirm: "You sure?" } %> | <%= link_to "go to items", items_path(item_category_id: item_category.id) %> | <%= link_to "+Add item", new_item_path(item_category_id: item_category.id) %>
           </td>
 
         </tr>

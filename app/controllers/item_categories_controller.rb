@@ -1,4 +1,6 @@
 class ItemCategoriesController < ApplicationController
+  before_action :find_category, only: [:update, :show, :edit, :destroy]
+
   def index
     @item_categories = ItemCategory.all
   end
@@ -18,7 +20,6 @@ class ItemCategoriesController < ApplicationController
   end
 
   def update
-    @item_category =  ItemCategory.find(params[:id])
     if @item_category.update_attributes(item_category_params)
       redirect_to @item_category
       flash[:success] = "item category updated successfully."
@@ -28,16 +29,12 @@ class ItemCategoriesController < ApplicationController
     end
   end
 
-  def show
-    @item_category =  ItemCategory.find(params[:id])
-  end
+  def show; end
 
-  def edit
-    @item_category =  ItemCategory.find(params[:id])
-  end
+  def edit; end
 
   def destroy
-    ItemCategory.find(params[:id]).destroy
+    @item_category.destroy
     flash[:success] = "User deleted"
     redirect_to item_categories_url
   end
@@ -45,6 +42,10 @@ class ItemCategoriesController < ApplicationController
 
 
   private
+
+  def find_category
+    @item_category =  ItemCategory.find(params[:id])
+  end
 
   def item_category_params
     params.require(:item_category).permit(:id, :name)

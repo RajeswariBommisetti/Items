@@ -1,11 +1,12 @@
 class ItemsController < ApplicationController
+  before_action :find_item, only: [:update, :show, :edit, :destroy]
   def index
-    @items = ItemCategory.find(params[:item_id]).items
+    @items = ItemCategory.find(params[:item_category_id]).items
   end
 
   def new
     @item= Item.new
-    @item_category = ItemCategory.find(params[:item_id])
+    @item_category = ItemCategory.find(params[:item_category_id])
   end
 
   def create
@@ -19,7 +20,6 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item =  Item.find(params[:id])
     if @item.update_attributes(item_params)
       redirect_to @item
       flash[:success] = "Item updated successfully."
@@ -28,21 +28,17 @@ class ItemsController < ApplicationController
     end
   end
 
-  def show
-    @item =  Item.find(params[:id])
-  end
+  def show;end
 
   def edit
-    @item =  Item.find(params[:id])
     @item_category = ItemCategory.find(params[:item_category_id])
   end
 
   def destroy
-    item = Item.find(params[:id])
-    item_category_id = item.item_category_id
-    item.destroy
+    item_category_id = @item.item_category_id
+    @item.destroy
     flash[:success] = "Item deleted"
-    redirect_to items_url(item_id: item.item_category_id)
+    redirect_to items_url(item_category_id: @item.item_category_id)
   end
 
   def tax_details
@@ -52,6 +48,10 @@ class ItemsController < ApplicationController
   end
 
   private
+
+  def find_item
+    @item = Item.find(params[:id])
+  end
 
   def item_params
     params.require(:item).permit(:id, :name, :rate, :item_category_id)
