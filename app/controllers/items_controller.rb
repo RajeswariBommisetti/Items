@@ -4,8 +4,9 @@ class ItemsController < ApplicationController
   end
 
   def new
+    byebug
     @item= Item.new
-    @item_category = ItemCategory.find(params[:id])
+    @item_category = ItemCategory.find(params[:item_id])
   end
 
   def create
