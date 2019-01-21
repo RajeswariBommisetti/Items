@@ -38,9 +38,11 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    Item.find(params[:id]).destroy
+    item = Item.find(params[:id])
+    item_category_id = item.item_category_id
+    item.destroy
     flash[:success] = "Item deleted"
-    redirect_to items_url
+    redirect_to items_url(item_id: item.item_category_id)
   end
 
   def tax_details
