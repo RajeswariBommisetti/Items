@@ -1,0 +1,32 @@
+<h1>Names of all the item taxes</h1>
+<div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>TAX</th>
+        <th>Tax type</th>
+        <th> Actions </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @item_taxes.each do |item_tax| %>
+          <td>
+            <%= link_to item_tax.id, item_tax %>
+          </td>
+          <td>
+            <%= item_tax.tax %>
+          </td>
+          <td>
+            <%= item_tax.tax_type %>
+          </td>
+          <td>
+            <%= link_to "edit", edit_item_tax_path(item_tax, item_id: item_tax.item.id, id: item_tax.id) %> | <%= link_to "delete", item_tax, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

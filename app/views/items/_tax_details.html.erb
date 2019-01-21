@@ -1,0 +1,35 @@
+<h1>Tax details of selected items</h1>
+<% total_tax = 0 %>
+<div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>sub Tax</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% selected_items.each do |item| %>
+        <tr>
+          <td>
+            <%= item.id %>
+          </td>
+          <td>
+            <%= link_to item.name, item %>
+          </td>
+          <% total_tax += item.item_taxes.sum(&:tax) %>
+          <td>
+            <%= item.item_taxes.sum(&:tax) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <li>
+    SubTotal: <%= sub_total %>
+  </li>
+  <li>
+    Total Tax: <%= total_tax %>
+  </li>
+</div>

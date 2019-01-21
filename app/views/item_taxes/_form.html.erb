@@ -1,0 +1,11 @@
+<%= form_for(@item_tax) do |f| %>
+
+  <%= f.label :tax %>
+  <%= f.text_field :tax, class: 'form-control' %>
+  <%= f.label :tax_type %>
+  <%= f.select :tax_type, ['Percentage', 'Value'], prompt: 'Select one', class: 'form-control'%>
+  <%= f.label :item_id %>
+  <%= f.select :item_id, Item.pluck(:id), selected: @item.id, class: 'form-control'%>
+
+  <%= f.submit "Save changes", class: "btn btn-primary" %>
+<% end %>
